@@ -12,19 +12,24 @@ jobs:
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 19
+          node-version: 20
           cache: npm
 
-      - name: Build
-        run: |
-          npm ci
-          npm run build
-          touch out/.nojekyll
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.4.3
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Create .nojekyll
+        run: touch out/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.7.2
         with:
           folder: out

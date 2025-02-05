@@ -46,7 +46,10 @@ export default function Home() {
 				</div>
 			</header>
 			<footer className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 text-white p-6 text-center mt-auto">
-				<p>© 2024 ClassClick. All rights reserved.</p>
+				<p>
+					© {new Date().getFullYear()} ClassClick. All rights reserved.{" "}
+					{process.env.COMMIT_HASH}
+				</p>
 			</footer>
 		</div>
 	);
